@@ -1,14 +1,11 @@
 class Hamming {
     static func compute(_ strandA: String, against strandB: String) -> Int? {
-        guard strandA.count == strandB.count else {
-            return nil
-        }
+        guard strandA.count == strandB.count else { return nil }
 
         var hammingDistance = 0
-        let strandB = Array(strandB)
 
-        for (index, letter) in strandA.enumerated() {
-            if letter != strandB[index] {
+        for (a, b) in zip(strandA, strandB) {
+            if a != b {
                 hammingDistance += 1
             }
         }
