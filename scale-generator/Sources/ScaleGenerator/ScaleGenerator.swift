@@ -1,9 +1,3 @@
-extension String {
-    func capitalizing() -> String {
-        prefix(1).uppercased() + self.lowercased().dropFirst()
-    }
-}
-
 class ScaleGenerator {
     let name: String
     private let tonic: String
@@ -20,12 +14,14 @@ class ScaleGenerator {
     ]
     
     init(tonic: String, scaleName: String, pattern: String = "mmmmmmmmmmmm") {
-        self.tonic = tonic.capitalizing()
+        self.tonic = tonic.prefix(1).uppercased() + tonic.dropFirst()
         self.name = "\(self.tonic) \(scaleName.lowercased())"
         self.pattern = pattern
         
         switch (tonic, scaleName) {
-        case ("F", _), ("Bb", _), ("Eb", _), ("Ab", _), ("Db", _), ("Gb", "major"), ("d", _), ("g", _), ("c", _), ("f", _), ("bb", _), ("eb", "minor"):
+        case ("F", _), ("Bb", _), ("Eb", _), ("Ab", _),
+             ("Db", _), ("Gb", "major"), ("d", _), ("g", _),
+             ("c", _), ("f", _), ("bb", _), ("eb", "minor"):
             usesSharps = false
         default:
             usesSharps = true
