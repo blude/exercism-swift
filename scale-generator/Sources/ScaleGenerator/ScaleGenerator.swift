@@ -1,3 +1,5 @@
+import Foundation
+
 class ScaleGenerator {
     let name: String
     private let tonic: String
@@ -14,7 +16,7 @@ class ScaleGenerator {
     ]
     
     init(tonic: String, scaleName: String, pattern: String = "mmmmmmmmmmmm") {
-        self.tonic = tonic.prefix(1).uppercased() + tonic.dropFirst()
+        self.tonic = tonic.capitalized
         self.name = "\(self.tonic) \(scaleName.lowercased())"
         self.pattern = pattern
         
