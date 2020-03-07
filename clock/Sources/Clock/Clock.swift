@@ -2,9 +2,9 @@ import Foundation
 
 class Clock: Equatable {
     var time: Date
+    var components = DateComponents()
 
     init(hours: Int = 0, minutes: Int = 0) {
-        var components = DateComponents()
         components.hour = hours
         components.minute = minutes
         
@@ -13,7 +13,6 @@ class Clock: Equatable {
     }
     
     func add(minutes: Int) -> Clock {
-        var components = DateComponents()
         components.hour = 0
         components.minute = minutes
         
@@ -23,7 +22,6 @@ class Clock: Equatable {
     }
     
     func subtract(minutes: Int) -> Clock {
-        var components = DateComponents()
         components.hour = 0
         components.minute = minutes * -1
 
