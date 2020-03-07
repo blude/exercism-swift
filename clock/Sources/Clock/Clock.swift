@@ -3,6 +3,7 @@ import Foundation
 class Clock: Equatable {
     var time: Date
     var components = DateComponents()
+    let formatter = DateFormatter()
 
     init(hours: Int = 0, minutes: Int = 0) {
         components.hour = hours
@@ -37,7 +38,6 @@ class Clock: Equatable {
 
 extension Clock: CustomStringConvertible {
     var description: String {
-        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: time)
     }
