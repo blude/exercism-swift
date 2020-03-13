@@ -1,11 +1,8 @@
 enum BearingTypes {
-    case north
-    case south
-    case east
-    case west
+    case north, south, east, west
 }
 
-enum InstructionTypes: String {
+enum InstructionTypes: Character {
     case turnLeft = "L"
     case turnRight = "R"
     case advance = "A"
@@ -16,8 +13,7 @@ class SimulatedRobot {
     var coordinates = [0, 0]
     
     func at(x: Int, y: Int) {
-        self.coordinates[0] = x
-        self.coordinates[1] = y
+        self.coordinates = [x, y]
     }
     
     func advance() {
@@ -70,14 +66,8 @@ class SimulatedRobot {
         self.bearing = bearing
     }
     
-    func instructions(_ instructions: String) -> [InstructionTypes] {
-        var robotInstructions = [InstructionTypes]()
-        
-        for instruction in instructions {
-            robotInstructions.append(InstructionTypes(rawValue: String(instruction))!)
-        }
-        
-        return robotInstructions
+    func instructions(_ expression: String) -> [InstructionTypes] {
+        expression.compactMap { InstructionTypes(rawValue: $0) }
     }
     
     func place(x: Int, y: Int, direction: BearingTypes) {
@@ -85,19 +75,15 @@ class SimulatedRobot {
         self.orient(direction)
     }
     
-    func evaluate(_ instructions: String) {
-        for instruction in instructions {
-            let robotInstruction = InstructionTypes(rawValue: String(instruction))
-            
-            switch robotInstruction {
+    func evaluate(_ expression: String) {
+        for instruction in instructions(expression) {
+            switch instruction {
             case .turnLeft:
                 self.turnLeft()
             case .turnRight:
                 self.turnRight()
             case .advance:
                 self.advance()
-            default:
-                break
             }
         }
     }
