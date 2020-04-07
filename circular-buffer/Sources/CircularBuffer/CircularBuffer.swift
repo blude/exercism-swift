@@ -3,56 +3,34 @@ enum CircularBufferError: Error {
 }
 
 struct CircularBuffer<S> {
-    var buffer: [S?]
-    var readIndex = 0
-    var writeIndex = 0
-    
-    init(capacity: Int) {
-        self.buffer = [S?](repeating: nil, count: capacity)
-    }
+    var buffer = [S]()
+    var capacity: Int
 
     mutating func clear() {
-        for (index, _) in buffer.enumerated() {
-            buffer[index] = nil
-        }
+        buffer = [S]()
     }
     
-    mutating func read() throws -> S? {
-        guard !isEmpty else {
+    mutating func read() throws -> S {
+        guard !buffer.isEmpty else {
             throw CircularBufferError.bufferEmpty
         }
-        let element = buffer[readIndex % buffer.count]
-        readIndex += 1
-        return element
+        return buffer.removeFirst()
     }
     
     mutating func write(_ value: S) throws {
-        guard !isFull else {
+        guard buffer.count < capacity else {
             throw CircularBufferError.bufferFull
         }
-        buffer[writeIndex % buffer.count] = value
-        writeIndex += 1
+        buffer.append(value)
     }
     
     mutating func overwrite(_ value: S) {
-        buffer[writeIndex % buffer.count] = value
-        writeIndex += 1
-    }
-    
-    fileprivate var spaceForReading: Int {
-        writeIndex - readIndex
-    }
-    
-    fileprivate var isEmpty: Bool {
-        spaceForReading == 0
-    }
-    
-    fileprivate var spaceForWriting: Int {
-        buffer.count - spaceForReading
-    }
-    
-    fileprivate var isFull: Bool {
-        spaceForWriting == 0
+        if buffer.count < capacity {
+            try? write(value)
+        } else {
+            buffer.removeFirst()
+            buffer.append(value)
+        }
     }
     
 }
