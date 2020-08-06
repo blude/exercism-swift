@@ -1,21 +1,3 @@
-extension Int {
-    enum ComparisonResult {
-        case equal, greater, smaller
-    }
-    
-    func compare(to other: Int) -> ComparisonResult {
-        if self < other {
-            return .smaller
-        }
-        
-        if self > other {
-            return .greater
-        }
-        
-        return .equal
-    }
-}
-
 enum NumberClassification {
     case perfect, abundant, deficient
 }
@@ -29,13 +11,13 @@ struct NumberClassifier {
     var classification: NumberClassification {
         let sum = aliquotSum(of: self.number)
         
-        switch sum.compare(to: self.number) {
-        case .equal:
-            return .perfect
-        case .greater:
+        switch sum {
+        case _ where sum > number:
             return .abundant
-        case .smaller:
+        case _ where sum < number:
             return .deficient
+        default:
+            return .perfect
         }
     }
     
