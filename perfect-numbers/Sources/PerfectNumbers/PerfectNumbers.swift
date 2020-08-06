@@ -29,7 +29,7 @@ struct NumberClassifier {
         var divisors = [Int]()
         var n = 1
         
-        while n < number {
+        while n <= number / 2 {
             if number % n == 0 {
                 divisors.append(n)
             }
