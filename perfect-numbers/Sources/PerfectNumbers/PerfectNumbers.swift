@@ -5,9 +5,6 @@ enum NumberClassification {
 struct NumberClassifier {
     let number: Int
     
-    typealias AliquotSum = Int
-    typealias Divisors = [Int]
-    
     var classification: NumberClassification {
         let sum = aliquotSum(of: self.number)
         
@@ -21,11 +18,11 @@ struct NumberClassifier {
         }
     }
     
-    func aliquotSum(of number: Int) -> AliquotSum {
+    func aliquotSum(of number: Int) -> Int {
         return divisors(of: number).reduce(0, +)
     }
     
-    func divisors(of number: Int) -> Divisors {
+    func divisors(of number: Int) -> [Int] {
         var divisors = [Int]()
         var n = 1
         
