@@ -1,8 +1,10 @@
-extension StringProtocol {
-    subscript(bounds: CountableRange<Int>) -> String {
-        let start = index(startIndex, offsetBy: bounds.lowerBound)
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return String(self[start ..< end])
+extension String {
+    func chunks(size: Int) -> [String] {
+        return stride(from: 0, to: self.count, by: size).map {
+            let start = index(startIndex, offsetBy: $0)
+            let end = index(start, offsetBy: size, limitedBy: endIndex) ?? endIndex
+            return String(self[start ..< end])
+        }
     }
 }
 
@@ -35,18 +37,10 @@ struct ProteinTranslation {
     }
     
     static func translationOfRNA(_ rna: String) throws -> [String] {
-        var proteinsFound = [String]()
-        let condonLength = 3
-        for index in stride(from: 0, to: rna.count, by: condonLength) {
-            if let protein = try? translationOfCodon(String(rna[index ..< index + condonLength])) {
-                if protein == "STOP" {
-                    break
-                }
-                proteinsFound.append(protein)
-            } else {
-                throw ProteinTranslationError.invalidCondon
-            }
+        let proteins = try rna.chunks(size: 3).map { condon in
+            try translationOfCodon(condon)
         }
-        return proteinsFound
+
+        return proteins.prefix { $0 != "STOP" }
     }
 }
