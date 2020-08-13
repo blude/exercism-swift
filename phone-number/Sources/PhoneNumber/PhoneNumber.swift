@@ -1,7 +1,7 @@
 import Foundation
 
 struct PhoneNumber {
-    var startingNumber: String
+    let startingNumber: String
     
     init(_ phoneNumber: String) {
         self.startingNumber = phoneNumber
@@ -28,8 +28,7 @@ struct PhoneNumber {
     }
     
     var areaCode: String {
-        let end = number.index(number.startIndex, offsetBy: 3)
-        return String(number[..<end])
+        return String(number.prefix(3))
     }
 }
 
