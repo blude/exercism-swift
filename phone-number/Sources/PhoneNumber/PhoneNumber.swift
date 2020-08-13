@@ -4,13 +4,7 @@ struct PhoneNumber: CustomStringConvertible {
     let number: String
     
     init(_ phoneNumber: String) {
-        var cleanedNumber = phoneNumber
-            .replacingOccurrences(of: "-", with: "")
-            .replacingOccurrences(of: ".", with: "")
-            .replacingOccurrences(of: "+", with: "")
-            .replacingOccurrences(of: "(", with: "")
-            .replacingOccurrences(of: ")", with: "")
-            .replacingOccurrences(of: " ", with: "")
+        var cleanedNumber = phoneNumber.filter { $0.isNumber }
         
         if cleanedNumber.first == "1" {
             cleanedNumber = String(cleanedNumber.dropFirst())
