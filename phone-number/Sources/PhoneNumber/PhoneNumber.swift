@@ -1,14 +1,10 @@
 import Foundation
 
-struct PhoneNumber {
-    let startingNumber: String
+struct PhoneNumber: CustomStringConvertible {
+    let number: String
     
     init(_ phoneNumber: String) {
-        self.startingNumber = phoneNumber
-    }
-    
-    var number: String {
-        var cleanedNumber = startingNumber
+        var cleanedNumber = phoneNumber
             .replacingOccurrences(of: "-", with: "")
             .replacingOccurrences(of: ".", with: "")
             .replacingOccurrences(of: "+", with: "")
@@ -21,18 +17,16 @@ struct PhoneNumber {
         }
         
         if cleanedNumber.count != 10 {
-            return "0000000000"
+            cleanedNumber = String(repeating: "0", count: 10)
         }
-        
-        return cleanedNumber
+
+        self.number = cleanedNumber
     }
     
     var areaCode: String {
         return String(number.prefix(3))
     }
-}
-
-extension PhoneNumber: CustomStringConvertible {
+    
     var description: String {
         var prettyNumber = number
 
@@ -44,3 +38,4 @@ extension PhoneNumber: CustomStringConvertible {
         return prettyNumber
     }
 }
+
