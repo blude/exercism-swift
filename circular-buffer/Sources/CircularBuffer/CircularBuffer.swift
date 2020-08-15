@@ -3,13 +3,16 @@ enum CircularBufferError: Error {
 }
 
 struct CircularBuffer<S> {
-    var buffer = [S]()
-    var capacity: Int
-
-    mutating func clear() {
-        buffer = [S]()
-    }
+    private var buffer: ContiguousArray<S> = []
+    let capacity: Int
     
+    init(capacity: Int) {
+        guard capacity > 0 else {
+            fatalError("Invalid capacity: \(capacity)")
+        }
+        self.capacity = capacity
+    }
+
     mutating func read() throws -> S {
         guard !buffer.isEmpty else {
             throw CircularBufferError.bufferEmpty
@@ -33,4 +36,8 @@ struct CircularBuffer<S> {
         }
     }
     
+    mutating func clear() {
+        buffer = []
+    }
+
 }
