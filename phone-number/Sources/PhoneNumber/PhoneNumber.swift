@@ -4,17 +4,17 @@ struct PhoneNumber: CustomStringConvertible {
     let number: String
     
     init(_ phoneNumber: String) {
-        var cleanedNumber = phoneNumber.filter { $0.isNumber }
+        var digitsOnly = phoneNumber.filter { $0.isNumber }
         
-        if cleanedNumber.first == "1" {
-            cleanedNumber = String(cleanedNumber.dropFirst())
+        if digitsOnly.first == "1" {
+            digitsOnly = String(digitsOnly.dropFirst())
         }
         
-        if cleanedNumber.count != 10 {
-            cleanedNumber = String(repeating: "0", count: 10)
+        if digitsOnly.count != 10 {
+            digitsOnly = String(repeating: "0", count: 10)
         }
 
-        self.number = cleanedNumber
+        self.number = digitsOnly
     }
     
     var areaCode: String {
