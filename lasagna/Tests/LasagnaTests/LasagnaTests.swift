@@ -9,17 +9,17 @@ final class LasagnaTests: XCTestCase {
   }
 
   func testRemainingMinutes() throws {
-    try XCTSkipIf(true && !runAll)  // change true to false to run this test
+    try XCTSkipIf(false && !runAll)  // change true to false to run this test
     XCTAssertEqual(remainingMinutesInOven(elapsedMinutes: 13), 27)
   }
 
   func testPreperationMinutes() throws {
-    try XCTSkipIf(true && !runAll)  // change true to false to run this test
+    try XCTSkipIf(false && !runAll)  // change true to false to run this test
     XCTAssertEqual(preparationTimeInMinutes(layers: 6), 12)
   }
 
   func testTotalMinutes() throws {
-    try XCTSkipIf(true && !runAll)  // change true to false to run this test
+    try XCTSkipIf(false && !runAll)  // change true to false to run this test
     XCTAssertEqual(totalTimeInMinutes(layers: 6, elapsedMinutes: 13), 39)
   }
 
