@@ -25,16 +25,11 @@ func licenseType(numberOfWheels wheels: Int) -> String {
 }
 
 func registrationFee(msrp: Int, yearsOld: Int) -> Int {
-    let baseCost = Double(msrp > 25_000 ? msrp : 25_000)
-    var price = baseCost
-    if (yearsOld >= 10) {
+    guard yearsOld < 10 else {
         return 25
-    } else {
-        for _ in 0..<yearsOld {
-            price -= baseCost * 0.1
-        }
-        return Int(price / 100.0)
     }
+    let baseCost = max(msrp, 25_000)
+    return baseCost - (baseCost / 10) * yearsOld / 100
 }
 
 
