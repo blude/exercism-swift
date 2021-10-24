@@ -29,7 +29,7 @@ func registrationFee(msrp: Int, yearsOld: Int) -> Int {
         return 25
     }
     let baseCost = max(msrp, 25_000)
-    return baseCost - (baseCost / 10) * yearsOld / 100
+    return (baseCost - (baseCost / 10) * yearsOld) / 100
 }
 
 
