@@ -33,21 +33,21 @@ func toOz(_ amount: inout (noodles: Int, sauce: Double)) {
 }
 
 func redWine(layers: String...) -> Bool {
-  var cheeses = 0
-  var meatAndSauce = 0
+  var whiteWine = 0
+  var redWine = 0
   
   for layer in layers {
     switch layer {
       case "mozzarella", "ricotta", "béchamel":
-        cheeses += 1
+        whiteWine += 1
         break
       case "meat", "sauce":
-        meatAndSauce += 1
+        redWine += 1
         break
       default:
         break
     }
   }
 
-  return cheeses > meatAndSauce ? false : true
+  return redWine >= whiteWine
 }
