@@ -6,26 +6,24 @@ struct Sieve {
     }
     
     var primes: [Int] {
-        let consecutives = 2..<number
-        let result = [2]
-        let arr = Array(repeating: true, count: number)
+        var integers = Array(repeating: true, count: number)
         
-        for n in consecutives {
-            let ns = stride(from: n, to: number, by: n)
+        for p in sequence(first: 2, next: { $0 * $0 <= number ? $0.advanced(by: 1) : nil }) {
+            if integers[p] == true {
+                for i in sequence(first: p * 2, next: { $0 <= number ? $0.advanced(by: p) : nil }) {
+                    integers[i] = false
+                }
+            }
+        }
+        
+        var result: [Int] = []
+        
+        for x in sequence(first: 2, next: { $0 <= number ? $0.advanced(by: 1) : nil }) {
+            if integers[x] {
+                result.append(x)
+            }
         }
         
         return result
     }
 }
-precedencegroup Functional {
-    associativity: left
-    higherThan: DefaultPrecedence
-}
-
-infix operator |>: Functional
-func |> <T,U>(x: T, f: (T) -> U) -> U {
-    return f(x)
-}
-
-infix operator <*>: Functional
-func <*> <T, U>(f:)
